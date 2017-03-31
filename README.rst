@@ -14,7 +14,7 @@ Installation
 The easiest way to install the plugin is to install it as a bundle.
 For example, using Pathogen__:
 
-1. Get and install `pathogen.vim <_Pathogen>`__. You can skip this step
+1. Get and install `pathogen.vim <https://github.com/tpope/vim-pathogen>`_. You can skip this step
    if you already have it installed.
 
 2. ``cd ~/.vim/bundle``
@@ -27,6 +27,26 @@ Bundle installs are known to work fine also when using Vundle__. Other
 bundle managers are expected to work as well.
 
 __ https://github.com/gmarik/vundle
+
+
+.. important:: If you use Fish__ as your shell, you *will* need to add
+   ``set shell=/bin/sh`` to your ``~/.vimrc`` — the plugin relies on the
+   setting pointing to a Bourne-compatible__ shell.
+
+__ http://fishshell.com/
+__ https://en.wikipedia.org/wiki/Bourne_shell
+
+
+Documentation
+=============
+
+The documentation can be browsed directly in Vim::
+
+    :help template.txt
+
+Alternatively, you can also `read it in your browser`__.
+
+__ https://github.com/aperezdc/vim-template/blob/master/doc/template.txt
 
 
 Updating
@@ -50,104 +70,4 @@ Use the ``:BundleUpdate`` command provided by Vundle, for example invoking
 Vim like this::
 
   % vim +BundleUpdate
-
-
-Configuration
-=============
-
-In your vimrc you can put:
-
-* ``let g:templates_plugin_loaded = 1`` to skip loading of this plugin.
-
-* ``let g:templates_no_autocmd = 1`` to disable automatic insertion of
-  template in new files.
-
-* ``let g:templates_name_prefix = .vimtemplate.`` to change the name of the
-  template files that are searched.
-
-* ``let g:templates_global_name_prefix = "template:"`` to change the prefix of the
-  templates in the global template directory.
-
-* ``let g:templates_debug = 1`` to have vim-template output debug information
-
-* ``let g:templates_fuzzy_start = 1`` to be able to name templates with
-  implicit fuzzy matching at the start of a template name.  For example a
-  template file named ``template:.c`` would match ``test.cpp``.
-
-* ``let g:templates_tr_in = [ '.', '_', '?' ]`` and 
-  ``let g:templates_tr_out = [ '\.', '.*', '\?' ]`` would allow you to change
-  how template names are interpretted as regular expressions for matching file
-  names. This might be helpful if hacking on a windows box where ``*`` is not
-  allowed in file names. The above configuration, for example, treates
-  underscores ``_`` as the typical regex wildcard ``.*``.
-
-Usage
-=====
-
-There are a number of options to use a template:
-
-
-* Create a new file giving it a name. The suffix will be used to determine
-  which template to use. E.g::
-
-    $ vim foo.c
-
-* In a buffer, use ``:Template *.foo`` to load the template that would be
-  loaded for file matching the pattern ``*.foo``. E.g. from within Vim::
-
-    :Template *.c
-
-Template search order
----------------------
-
-The algorithm to search for templates works like this:
-
-1. A file named ``.vim-template:<pattern>`` in the current directory. If not
-   found, goto *(2)*. If there are multiple template files that match a given
-   suffix in the *same* directory, the one that is most specific is used.
-
-2. Go up a directory and goto *(1)*, if not possible, goto *(3)*.
-
-3. Try to use the ``=template=<pattern>`` file supplied with the plugin.
-
-
-Variables in templates
-----------------------
-
-The following variables will be expanded in templates:
-
-``%DAY%``, ``%YEAR%``, ``%MONTH%``
-    Numerical day of the month, year and month.
-``%DATE%``
-    Date in ``YYYY-mm-dd`` format
-``%TIME%``
-    Time in ``HH:MM`` format
-``%FDATE%``
-    Full date (date + time), in ``YYYY-mm-dd HH:MM`` format.
-``%FILE%``
-    File name, without extension.
-``%FFILE%``
-    File name, with extension.
-``%EXT%``
-    File extension.
-``%MAIL%``
-    Current user's e-mail address. May be overriden by defining ``g:email``.
-``%USER%``
-    Current logged-in user name. May be overriden by defining ``g:username``.
-``%HOST%``
-    Host name.
-``%GUARD%``
-    A string with alphanumeric characters and underscores, suitable for use
-    in proprocessor guards for C/C++/Objective-C header files.
-``%CLASS%``
-    File name, without extension, and the first character of every word is
-    capital
-``%MACROCLASS%``
-    File name, without extension, and all characters are capitals.
-``%CAMELCLASS%``
-    File name, without extension, the first character of every word is capital,
-    and all underscores are removed.
-``%HERE%``
-    Expands to nothing, but ensures that the cursor will be placed in its
-    position after expanding the template.
 
